@@ -1,9 +1,14 @@
 import cv2
 import numpy as np
+import pygame
 
 
 def doSomething():
-    print("make make made")
+    if pygame.mixer.music.get_busy()!=1:
+        print("play")
+        pygame.mixer.music.play()
+   
+    
 
 
 def catchFace(frame,classifier):
@@ -24,9 +29,10 @@ def catchFace(frame,classifier):
 
 def main():
     cv2.namedWindow("test")
+    pygame.mixer.init()
+    pygame.mixer.music.load(r"ad.mp3")
     cap = cv2.VideoCapture("rtsp://192.168.14.139:8080/1122")
     classifier = cv2.CascadeClassifier("haarcascade_frontalcatface.xml")
-
     while True:
         success, frame = cap.read()
         if not success:
@@ -38,7 +44,9 @@ def main():
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0))
             doSomething()
         else:
-            print("no face")    
+            if pygame.mixer.music.get_busy()==1:
+                print("stop")
+                pygame.mixer.music.stop()
             
         cv2.imshow("test", frame)
         key = cv2.waitKey(10)
@@ -46,6 +54,7 @@ def main():
         if c in ['q', 'Q', chr(27)]:
             break
     cv2.destroyWindow("test")
+    pygame.mixer.music.stop()
 
 if __name__ == '__main__':
     main()
