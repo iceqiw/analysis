@@ -31,7 +31,7 @@ def main():
     cv2.namedWindow("test")
     pygame.mixer.init()
     pygame.mixer.music.load(r"ad.mp3")
-    cap = cv2.VideoCapture("rtsp://192.168.14.139:8080/1122")
+    cap = cv2.VideoCapture("rtsp://192.168.1.106:8080/1122")
     classifier = cv2.CascadeClassifier("haarcascade_frontalcatface.xml")
     while True:
         success, frame = cap.read()
